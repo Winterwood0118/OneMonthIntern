@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
-import kr.nbc.onemonthintern.data.extension.toEntity
-import kr.nbc.onemonthintern.data.extension.toResponse
+import kr.nbc.onemonthintern.data.util.toEntity
+import kr.nbc.onemonthintern.data.util.toResponse
 import kr.nbc.onemonthintern.data.model.UserResponse
 import kr.nbc.onemonthintern.domain.model.UserEntity
 import kr.nbc.onemonthintern.domain.repository.UserRepository
@@ -55,7 +55,7 @@ class UserRepositoryImpl@Inject constructor(
         firestore.collection("userData").document(userUid).set(userData)
     }
 
-    private fun getUserUid(): String{
+    override suspend fun getUserUid(): String{
         return firebaseAuth.currentUser?.uid?: throw Exception("User Not Login")
     }
 }

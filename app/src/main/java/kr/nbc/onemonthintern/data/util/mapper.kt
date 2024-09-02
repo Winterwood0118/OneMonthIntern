@@ -1,4 +1,4 @@
-package kr.nbc.onemonthintern.data.extension
+package kr.nbc.onemonthintern.data.util
 
 import kr.nbc.onemonthintern.data.model.UserResponse
 import kr.nbc.onemonthintern.domain.model.UserEntity

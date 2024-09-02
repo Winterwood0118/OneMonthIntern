@@ -8,6 +8,7 @@ interface UserRepository {
     suspend fun signOut()
     suspend fun withDrawl()
 
+    suspend fun getUserUid(): String
     suspend fun getUserData(): UserEntity
     suspend fun setUserData(email: String, userEntity: UserEntity)
 }
