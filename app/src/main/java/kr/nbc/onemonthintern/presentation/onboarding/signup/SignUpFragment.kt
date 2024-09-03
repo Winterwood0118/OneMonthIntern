@@ -1,13 +1,12 @@
 package kr.nbc.onemonthintern.presentation.onboarding.signup
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kr.nbc.onemonthintern.R
 import kr.nbc.onemonthintern.databinding.FragmentSignUpBinding
 
 @AndroidEntryPoint

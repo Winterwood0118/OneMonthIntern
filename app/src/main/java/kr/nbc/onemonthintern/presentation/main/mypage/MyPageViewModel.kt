@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class MyPageViewModel @Inject constructor(
     userRepository: UserRepository
-): ViewModel() {
+) : ViewModel() {
 
 }

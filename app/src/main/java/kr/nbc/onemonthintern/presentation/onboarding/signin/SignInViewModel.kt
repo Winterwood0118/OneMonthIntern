@@ -7,13 +7,13 @@ import kr.nbc.onemonthintern.domain.repository.UserRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel@Inject constructor(
+class SignInViewModel @Inject constructor(
     private val userRepository: UserRepository
-): ViewModel() {
-    suspend fun signIn(email: String, password: String){
+) : ViewModel() {
+    suspend fun signIn(email: String, password: String) {
         try {
             userRepository.signIn(email, password)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("Unknown Error", e.toString(), e)
         }
     }

@@ -9,14 +9,14 @@ import kr.nbc.onemonthintern.presentation.util.toEntity
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel@Inject constructor(
+class SignUpViewModel @Inject constructor(
     private val userRepository: UserRepository
-) :ViewModel() {
+) : ViewModel() {
 
-    suspend fun signUp(email: String, password: String, userModel: UserModel){
+    suspend fun signUp(email: String, password: String, userModel: UserModel) {
         try {
             userRepository.signUp(email, password, userModel.toEntity())
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("Unknown Error", e.toString(), e)
         }
     }
