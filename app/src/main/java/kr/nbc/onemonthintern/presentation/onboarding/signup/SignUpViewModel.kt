@@ -1,5 +1,6 @@
 package kr.nbc.onemonthintern.presentation.onboarding.signup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kr.nbc.onemonthintern.domain.repository.UserRepository
@@ -13,6 +14,10 @@ class SignUpViewModel@Inject constructor(
 ) :ViewModel() {
 
     suspend fun signUp(email: String, password: String, userModel: UserModel){
-        userRepository.signUp(email, password, userModel.toEntity())
+        try {
+            userRepository.signUp(email, password, userModel.toEntity())
+        } catch (e: Exception){
+            Log.e("Unknown Error", e.toString(), e)
+        }
     }
 }

@@ -4,7 +4,7 @@ import kr.nbc.onemonthintern.domain.model.UserEntity
 
 interface UserRepository {
     suspend fun signUp(email: String, password: String, userEntity: UserEntity)
-    suspend fun signIn(email: String, password: String, userEntity: UserEntity): UserEntity
+    suspend fun signIn(email: String, password: String): UserEntity
     suspend fun signOut()
     suspend fun withDrawl()
 

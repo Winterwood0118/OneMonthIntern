@@ -20,7 +20,7 @@ class UserRepositoryImpl@Inject constructor(
         setUserData(email, userEntity)
     }
 
-    override suspend fun signIn(email: String, password: String, userEntity: UserEntity): UserEntity {
+    override suspend fun signIn(email: String, password: String): UserEntity {
         firebaseAuth.signInWithEmailAndPassword(email, password).await()
         val userUid = firebaseAuth.currentUser?.uid?: throw Exception("Do Not Login")
         val snapshot = firestore.collection("userData").document(userUid).get().await()
