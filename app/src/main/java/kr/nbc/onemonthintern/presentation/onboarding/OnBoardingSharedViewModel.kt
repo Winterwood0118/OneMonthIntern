@@ -2,7 +2,9 @@ package kr.nbc.onemonthintern.presentation.onboarding
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import kr.nbc.onemonthintern.domain.repository.UserRepository
 import kr.nbc.onemonthintern.presentation.model.UserModel
 import kr.nbc.onemonthintern.presentation.util.toEntity
@@ -12,6 +14,9 @@ import javax.inject.Inject
 class OnBoardingSharedViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
+
+    private var _isDuplicate = true
+    val isDuplicated get() = _isDuplicate
 
     private var _emailInput: String? = null
     val emailInput get() = _emailInput!!
@@ -47,5 +52,15 @@ class OnBoardingSharedViewModel @Inject constructor(
         _phoneNumberInput = phoneNumber
     }
 
+    suspend fun checkDuplicate(email: String){
+        viewModelScope.launch {
+            try {
+                _isDuplicate = userRepository.isDuplicateEmail(email)
+            }catch (e: Exception){
+                Log.e("Unknown Error", e.toString(), e)
+                _isDuplicate = true
+            }
+        }
+    }
 
 }
