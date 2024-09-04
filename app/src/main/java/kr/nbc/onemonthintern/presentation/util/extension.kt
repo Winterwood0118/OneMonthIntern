@@ -29,7 +29,7 @@ fun String.checkPhoneNumberRegex(): Boolean {
 }
 
 fun String.checkNameRegex(): Boolean {
-    val nameRegex = "^가-힣{2,12}$"
+    val nameRegex = "^[가-힣]{2,12}\$"
     return this.matches(nameRegex.toRegex())
 }
 

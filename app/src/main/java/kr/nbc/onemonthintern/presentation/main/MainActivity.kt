@@ -8,16 +8,21 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kr.nbc.onemonthintern.R
 import kr.nbc.onemonthintern.databinding.ActivityMainBinding
-import kr.nbc.onemonthintern.presentation.main.home.HomeFragment
 import kr.nbc.onemonthintern.presentation.onboarding.OnBoardingActivity
+import kr.nbc.onemonthintern.presentation.util.UiState
+import kr.nbc.onemonthintern.presentation.util.makeShortToast
+import kr.nbc.onemonthintern.presentation.util.setOnDebounceClickListener
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val sharedViewModel: MainSharedViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,24 +33,55 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         checkLogin()
-        initFragment()
-    }
-
-    private fun initFragment(){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fcMain, HomeFragment())
-            .addToBackStack("home")
-            .commit()
+        initView()
     }
 
 
-    private fun checkLogin(){
-        Log.d("Check Login", sharedViewModel.currentUserUid.toString())
+    private fun checkLogin() {
+        Log.d("Check Login", mainViewModel.currentUserUid.toString())
+        lifecycleScope.launch {
+            mainViewModel.currentUserUid.collectLatest {
+                when (it) {
+                    is UiState.Loading -> {
+                        mainViewModel.getUserUid()
+                    }
 
-        if(sharedViewModel.currentUserUid == null) {
-            val intent = Intent(this, OnBoardingActivity::class.java)
-            startActivity(intent)
-            finish()
+                    is UiState.Error -> {
+                        makeShortToast("로그인 화면으로 이동합니다.")
+                        launchOnBoardingActivity()
+                    }
+
+                    is UiState.Success -> {
+                        //nothing to do
+                    }
+                }
+            }
         }
+
+    }
+
+    private fun initView() {
+        with(binding) {
+            btnSignOut.setOnDebounceClickListener {
+                lifecycleScope.launch {
+                    mainViewModel.signOut()
+                    launchOnBoardingActivity()
+                }
+
+            }
+
+            btnWithDrawl.setOnDebounceClickListener {
+                lifecycleScope.launch {
+                    mainViewModel.withDrawl()
+                    launchOnBoardingActivity()
+                }
+            }
+        }
+    }
+
+    private fun launchOnBoardingActivity() {
+        val intent = Intent(this, OnBoardingActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

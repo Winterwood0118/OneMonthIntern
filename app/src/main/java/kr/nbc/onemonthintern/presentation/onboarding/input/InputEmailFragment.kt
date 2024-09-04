@@ -43,7 +43,7 @@ class InputEmailFragment : Fragment(), CheckRegexFragment {
         val email = binding.etEmail.text.toString()
         val result = email.checkEmailRegex()
 
-        if(!result) makeShortToast("잘못된 이메일 형식입니다.")
+        if (!result) makeShortToast("잘못된 이메일 형식입니다.")
         else sharedViewModel.inputEmail(email)
 
         return result

@@ -3,6 +3,7 @@ package kr.nbc.onemonthintern.data.repository
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 import kr.nbc.onemonthintern.data.model.UserResponse
 import kr.nbc.onemonthintern.data.util.toEntity
@@ -20,16 +21,17 @@ class UserRepositoryImpl @Inject constructor(
         setUserData(email, userEntity)
     }
 
-    override suspend fun signIn(email: String, password: String): UserEntity {
+    override suspend fun signIn(email: String, password: String){
         firebaseAuth.signInWithEmailAndPassword(email, password).await()
-        val userUid = firebaseAuth.currentUser?.uid ?: throw Exception("Do Not Login")
+/*        val userUid = firebaseAuth.currentUser?.uid ?: throw Exception("Do Not Login")
         val snapshot = firestore.collection("userData").document(userUid).get().await()
-        val userData = snapshot.toObject(UserResponse::class.java)?.toEntity()
-        return userData ?: throw Exception("Do Not Login")
+        val userData = snapshot.toObject<UserResponse>()?.toEntity()
+        return userData ?: throw Exception("Do Not Login")*/
     }
 
     override suspend fun isDuplicateEmail(email: String): Boolean {
         val snapshot = firestore.collection("userData").whereEqualTo("email", email).get().await()
+        Log.d("duple", snapshot.toString())
         return !snapshot.isEmpty
     }
 
@@ -46,12 +48,13 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getUserData(): UserEntity {
         val userUid = getUserUid()
         var userData: UserEntity? = null
+        Log.d("uid", userUid)
         firestore.collection("userData").document(userUid).addSnapshotListener { snapshot, e ->
             e?.let {
                 Log.e("Get User Data Error", e.toString(), e)
                 return@addSnapshotListener
             }
-            userData = snapshot?.toObject(UserResponse::class.java)?.toEntity()
+            userData = snapshot?.toObject<UserResponse>()?.toEntity()
                 ?: throw Exception("Get User Data Error")
         }
         return userData ?: throw Exception("Get User Data Error")
