@@ -6,26 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/pristine"
     android:clickable="false"
-    tools:context=".presentation.onboarding.input.InputEmailFragment">
+    tools:context=".presentation.main.mypage.MyPageFragment">
 
     <TextView
-        android:id="@+id/tvTitle"
-        style="@style/HeadLineTextView"
+        android:id="@+id/tvHello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이메일을 입력해주세요"
+        android:text="@string/hello_user"
+        android:textSize="32sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etEmail"
-        style="@style/CustomEditText"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="example@email.com"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="aaabbbccc"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/tvHello" />
 </androidx.constraintlayout.widget.ConstraintLayout>

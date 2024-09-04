@@ -9,9 +9,11 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kr.nbc.onemonthintern.databinding.FragmentInputEmailBinding
 import kr.nbc.onemonthintern.presentation.onboarding.OnBoardingSharedViewModel
+import kr.nbc.onemonthintern.presentation.util.checkEmailRegex
+import kr.nbc.onemonthintern.presentation.util.makeShortToast
 
 @AndroidEntryPoint
-class InputEmailFragment : Fragment() {
+class InputEmailFragment : Fragment(), CheckRegexFragment {
     private var _binding: FragmentInputEmailBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel: OnBoardingSharedViewModel by activityViewModels()
@@ -35,5 +37,15 @@ class InputEmailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun checkRegex(): Boolean {
+        val email = binding.etEmail.text.toString()
+        val result = email.checkEmailRegex()
+
+        if(!result) makeShortToast("잘못된 이메일 형식입니다.")
+        else sharedViewModel.inputEmail(email)
+
+        return result
     }
 }

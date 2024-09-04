@@ -40,15 +40,15 @@ class OnBoardingSharedViewModel @Inject constructor(
         _emailInput = email
     }
 
-    fun passwordInput(password: String){
+    fun inputPassword(password: String){
         _passwordInput = passwordInput
     }
 
-    fun nameInput(name: String){
+    fun inputName(name: String){
         _nameInput = name
     }
 
-    fun phoneNumberInput(phoneNumber: String){
+    fun inputPhoneNumber(phoneNumber: String){
         _phoneNumberInput = phoneNumber
     }
 
