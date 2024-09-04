@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OneMonthIntern</string>
+    <string name="hello_user">안녕하세요! %1$1님!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

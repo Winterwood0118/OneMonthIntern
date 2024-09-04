@@ -1,19 +1,18 @@
-package kr.nbc.onemonthintern.presentation.onboarding.signin
+package kr.nbc.onemonthintern.presentation.onboarding.input
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
-import kr.nbc.onemonthintern.databinding.FragmentMyPageBinding
+import androidx.fragment.app.activityViewModels
+import kr.nbc.onemonthintern.databinding.FragmentInputNameBinding
+import kr.nbc.onemonthintern.presentation.onboarding.OnBoardingSharedViewModel
 
-@AndroidEntryPoint
-class SignInFragment : Fragment() {
-    private var _binding: FragmentMyPageBinding? = null
+class InputNameFragment : Fragment() {
+    private var _binding: FragmentInputNameBinding? = null
     private val binding get() = _binding!!
-    private val viewModel:SignInViewModel by viewModels()
+    private val sharedViewModel: OnBoardingSharedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +22,7 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMyPageBinding.inflate(inflater, container, false)
+        _binding = FragmentInputNameBinding.inflate(inflater, container, false)
         return binding.root
     }
 

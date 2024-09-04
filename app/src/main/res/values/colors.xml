@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pristine">#F2E8DA</color>
+    <color name="peach_fuzz">#FFBE98</color>
+    <color name="honey_peach">#DEC19C</color>
+    <color name="peach_pure">#F3D1B9</color>
+    <color name="peach_pink">#FA9A85</color>
+    <color name="georgia_peach">#F37778</color>
+    <color name="peach_blossom">#DE8286</color>
+    <color name="peach_pearl">#F9B5A9</color>
 </resources>

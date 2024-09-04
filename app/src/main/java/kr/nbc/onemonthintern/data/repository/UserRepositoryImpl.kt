@@ -28,6 +28,11 @@ class UserRepositoryImpl @Inject constructor(
         return userData ?: throw Exception("Do Not Login")
     }
 
+    override suspend fun isDuplicateEmail(email: String): Boolean {
+        val snapshot = firestore.collection("userData").whereEqualTo("email", email).get().await()
+        return !snapshot.isEmpty
+    }
+
     override suspend fun signOut() {
         firebaseAuth.signOut()
     }

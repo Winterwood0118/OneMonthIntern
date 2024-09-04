@@ -15,8 +15,12 @@ import javax.inject.Inject
 class MainSharedViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
+
     private val _currentUserData = MutableStateFlow<UiState<UserModel>>(UiState.Loading)
     val currentUserData get() = _currentUserData
+
+    private var _currentUserUid: String? = null
+    val currentUserUid get() = _currentUserUid
 
     fun getUserData() {
         viewModelScope.launch {

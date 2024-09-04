@@ -1,19 +1,20 @@
-package kr.nbc.onemonthintern.presentation.onboarding.signup
+package kr.nbc.onemonthintern.presentation.onboarding.input
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kr.nbc.onemonthintern.databinding.FragmentSignUpBinding
+import kr.nbc.onemonthintern.databinding.FragmentInputPasswordBinding
+import kr.nbc.onemonthintern.presentation.onboarding.OnBoardingSharedViewModel
 
 @AndroidEntryPoint
-class SignUpFragment : Fragment() {
-    private var _binding: FragmentSignUpBinding? = null
+class InputPasswordFragment : Fragment() {
+    private var _binding: FragmentInputPasswordBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SignUpViewModel by viewModels()
+    private val sharedViewModel: OnBoardingSharedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSignUpBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentInputPasswordBinding.inflate(inflater, container, false)
         return binding.root
     }
 
