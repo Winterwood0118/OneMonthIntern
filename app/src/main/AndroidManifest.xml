@@ -17,6 +17,7 @@
         tools:targetApi="33">
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"

@@ -95,7 +95,7 @@ class OnBoardingActivity : AppCompatActivity() {
                                 }
                                 sharedViewModel.resetDuplicateCheck()
                             } else {
-                                makeShortToast("가입정보가 없습니다.\n회원가입을 시작합니다.ㅅ")
+                                makeShortToast("가입정보가 없습니다.\n회원가입을 시작합니다.")
                                 with(binding) {
                                     vpOnBoarding.currentItem++
                                     btnReturn.setVisibilityToVisible()
@@ -130,10 +130,10 @@ class OnBoardingActivity : AppCompatActivity() {
                             sharedViewModel.checkDuplicate()
                         }
 
-                        3 -> {
+                        2 -> {
+                            it.setVisibilityToGone()
                             vpOnBoarding.currentItem++
                             btnReturn.setVisibilityToVisible()
-                            it.setVisibilityToGone()
                             btnSignUp.setVisibilityToVisible()
                         }
 
