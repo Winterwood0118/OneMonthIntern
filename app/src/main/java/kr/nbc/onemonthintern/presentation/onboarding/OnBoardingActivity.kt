@@ -28,7 +28,7 @@ import kr.nbc.onemonthintern.presentation.util.setVisibilityToVisible
 class OnBoardingActivity : AppCompatActivity() {
     private val binding by lazy { ActivityOnBoardingBinding.inflate(layoutInflater) }
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    val sharedViewModel: OnBoardingSharedViewModel by viewModels()
+    private val sharedViewModel: OnBoardingSharedViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

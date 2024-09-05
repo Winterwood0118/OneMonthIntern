@@ -11,17 +11,18 @@ import javax.inject.Inject
 @HiltViewModel
 class LogInSelectViewModel @Inject constructor(
     private val userRepository: UserRepository
-): ViewModel() {
+) : ViewModel() {
 
     private var _isGoogleLogInSuccess = MutableLiveData(false)
     val isGoogleLogInSuccess: LiveData<Boolean> get() = _isGoogleLogInSuccess
 
-    fun googleLogIn(token: String){
-        userRepository.authWithGoogle(token)
+    suspend fun googleLogIn(token: String): Boolean {
+        _isGoogleLogInSuccess.postValue(userRepository.authWithGoogle(token))
+        return userRepository.authWithGoogle(token)
     }
 
-    fun setIsGoogleLogInSuccess(boolean: Boolean){
+/*    fun setIsGoogleLogInSuccess(boolean: Boolean) {
         _isGoogleLogInSuccess.value = boolean
-    }
+    }*/
 
 }

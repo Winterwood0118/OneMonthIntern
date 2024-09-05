@@ -9,11 +9,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kr.nbc.onemonthintern.R
 import kr.nbc.onemonthintern.databinding.ActivityLogInSelectBinding
 import kr.nbc.onemonthintern.presentation.main.MainActivity
@@ -30,12 +32,11 @@ class LogInSelectActivity : AppCompatActivity() {
             Log.d("LOGIN--", task.toString())
             try {
                 val account = task.getResult(ApiException::class.java)!!
-                val logInResult = viewModel.googleLogIn(token = account.idToken!!)
-                Log.d("loginState", logInResult.toString())
-                viewModel.setIsGoogleLogInSuccess(true)
+                lifecycleScope.launch {
+                    viewModel.googleLogIn(token = account.idToken!!)
+                }
             } catch (e: ApiException) {
                 makeShortToast("구글 로그인 실패")
-                viewModel.setIsGoogleLogInSuccess(false)
             }
 
         }

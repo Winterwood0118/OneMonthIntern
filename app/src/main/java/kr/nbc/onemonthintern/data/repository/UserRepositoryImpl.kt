@@ -71,14 +71,18 @@ class UserRepositoryImpl @Inject constructor(
         return firebaseAuth.currentUser?.uid ?: throw Exception("User Not Login")
     }
 
-    override fun authWithGoogle(token: String) {
+    override suspend fun authWithGoogle(token: String): Boolean {
         val credential = GoogleAuthProvider.getCredential(token, null)
+        var logInResult = false
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if(task.isSuccessful) {
                 Log.d("Google LogIn Success", "구글 로그인 성공")
+                logInResult = true
             } else {
                 Log.d("Google LogIn Failure", "구글 로그인 실패")
+                logInResult = false
             }
-        }
+        }.await()
+        return logInResult
     }
 }
