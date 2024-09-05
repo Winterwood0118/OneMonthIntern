@@ -19,15 +19,11 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override suspend fun signUp(email: String, password: String, userEntity: UserEntity) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-        setUserData(email, userEntity)
+        setUserData(userEntity)
     }
 
-    override suspend fun signIn(email: String, password: String){
+    override suspend fun signIn(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).await()
-/*        val userUid = firebaseAuth.currentUser?.uid ?: throw Exception("Do Not Login")
-        val snapshot = firestore.collection("userData").document(userUid).get().await()
-        val userData = snapshot.toObject<UserResponse>()?.toEntity()
-        return userData ?: throw Exception("Do Not Login")*/
     }
 
     override suspend fun isDuplicateEmail(email: String): Boolean {
@@ -61,7 +57,7 @@ class UserRepositoryImpl @Inject constructor(
         return userData ?: throw Exception("Get User Data Error")
     }
 
-    override suspend fun setUserData(email: String, userEntity: UserEntity) {
+    override suspend fun setUserData(userEntity: UserEntity) {
         val userUid = getUserUid()
         val userData = userEntity.toResponse()
         firestore.collection("userData").document(userUid).set(userData)
@@ -75,7 +71,7 @@ class UserRepositoryImpl @Inject constructor(
         val credential = GoogleAuthProvider.getCredential(token, null)
         var logInResult = false
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
-            if(task.isSuccessful) {
+            if (task.isSuccessful) {
                 Log.d("Google LogIn Success", "구글 로그인 성공")
                 logInResult = true
             } else {
@@ -83,6 +79,22 @@ class UserRepositoryImpl @Inject constructor(
                 logInResult = false
             }
         }.await()
+        if (checkFirstLogIn() && logInResult){
+            val email = firebaseAuth.currentUser?.email ?: ""
+            val name = firebaseAuth.currentUser?.displayName ?: ""
+            val phoneNumber = firebaseAuth.currentUser?.phoneNumber ?: ""
+            val userEntity = UserEntity(email, name, phoneNumber)
+            setUserData(userEntity)
+        }
         return logInResult
+    }
+
+    private suspend fun checkFirstLogIn(): Boolean {
+        val userUid = firebaseAuth.currentUser?.uid
+        userUid?.let {
+            val snapshot = firestore.collection("userData").document(userUid).get().await()
+            return snapshot.data?.isEmpty() ?: true
+        }
+        return false
     }
 }

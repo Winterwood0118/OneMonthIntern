@@ -11,7 +11,7 @@ interface UserRepository {
 
     suspend fun getUserUid(): String
     suspend fun getUserData(): UserEntity
-    suspend fun setUserData(email: String, userEntity: UserEntity)
+    suspend fun setUserData(userEntity: UserEntity)
 
     suspend fun authWithGoogle(token: String): Boolean
 }
