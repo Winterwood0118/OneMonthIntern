@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">OneMonthIntern</string>
     <string name="hello_user">안녕하세요! %1$1님!</string>
+    <string name="google_client_key">442211692313-cu2dqc1lfndb7ms4eq20tq042kc86dec.apps.googleusercontent.com</string>
 </resources>

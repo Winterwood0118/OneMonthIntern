@@ -8,6 +8,8 @@ plugins {
 }
 
 android {
+
+
     namespace = "kr.nbc.onemonthintern"
     compileSdk = 34
 
@@ -17,7 +19,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -47,6 +48,8 @@ android {
     viewBinding {
         enable = true
     }
+
+
 }
 
 dependencies {

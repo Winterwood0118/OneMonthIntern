@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kr.nbc.onemonthintern.R
 import kr.nbc.onemonthintern.databinding.ActivityMainBinding
+import kr.nbc.onemonthintern.presentation.onboarding.LogInSelectActivity
 import kr.nbc.onemonthintern.presentation.onboarding.OnBoardingActivity
 import kr.nbc.onemonthintern.presentation.util.UiState
 import kr.nbc.onemonthintern.presentation.util.makeShortToast
@@ -39,16 +40,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkLogin() {
         Log.d("Check Login", mainViewModel.currentUserUid.toString())
+        mainViewModel.getUserUid()
         lifecycleScope.launch {
             mainViewModel.currentUserUid.collectLatest {
                 when (it) {
                     is UiState.Loading -> {
-                        mainViewModel.getUserUid()
                     }
 
                     is UiState.Error -> {
-                        makeShortToast("로그인 화면으로 이동합니다.")
-                        launchOnBoardingActivity()
+                        makeShortToast("로그인 정보가 없습니다. 로그인 화면으로 이동합니다.")
+                        launchLogInSelectActivity()
                     }
 
                     is UiState.Success -> {
@@ -65,7 +66,8 @@ class MainActivity : AppCompatActivity() {
             btnSignOut.setOnDebounceClickListener {
                 lifecycleScope.launch {
                     mainViewModel.signOut()
-                    launchOnBoardingActivity()
+                    makeShortToast("로그아웃하였습니다.\n로그인 화면으로 이동합니다.")
+                    launchLogInSelectActivity()
                 }
 
             }
@@ -73,14 +75,15 @@ class MainActivity : AppCompatActivity() {
             btnWithDrawl.setOnDebounceClickListener {
                 lifecycleScope.launch {
                     mainViewModel.withDrawl()
-                    launchOnBoardingActivity()
+                    makeShortToast("회원탈퇴하였습니다.\n로그인 화면으로 이동합니다.")
+                    launchLogInSelectActivity()
                 }
             }
         }
     }
 
-    private fun launchOnBoardingActivity() {
-        val intent = Intent(this, OnBoardingActivity::class.java)
+    private fun launchLogInSelectActivity() {
+        val intent = Intent(this, LogInSelectActivity::class.java)
         startActivity(intent)
         finish()
     }

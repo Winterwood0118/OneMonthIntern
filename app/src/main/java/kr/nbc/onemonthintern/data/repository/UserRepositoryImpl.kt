@@ -2,6 +2,7 @@ package kr.nbc.onemonthintern.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
@@ -68,5 +69,16 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUserUid(): String {
         return firebaseAuth.currentUser?.uid ?: throw Exception("User Not Login")
+    }
+
+    override fun authWithGoogle(token: String) {
+        val credential = GoogleAuthProvider.getCredential(token, null)
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if(task.isSuccessful) {
+                Log.d("Google LogIn Success", "구글 로그인 성공")
+            } else {
+                Log.d("Google LogIn Failure", "구글 로그인 실패")
+            }
+        }
     }
 }
