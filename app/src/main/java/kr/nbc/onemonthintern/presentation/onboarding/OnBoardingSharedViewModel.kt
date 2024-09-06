@@ -81,7 +81,6 @@ class OnBoardingSharedViewModel @Inject constructor(
 
     fun checkDuplicate() {
         viewModelScope.launch {
-            _isDuplicate.emit(UiState.Loading)
             try {
                 _isDuplicate.emit(UiState.Success(userRepository.isDuplicateEmail(emailInput)))
             } catch (e: Exception) {
