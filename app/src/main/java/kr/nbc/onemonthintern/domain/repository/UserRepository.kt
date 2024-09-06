@@ -10,7 +10,7 @@ interface UserRepository {
     suspend fun isDuplicateEmail(email: String): Boolean
 
     suspend fun getUserUid(): String
-    suspend fun getUserData(): UserEntity
+    suspend fun getUserData(userUid: String): UserEntity
     suspend fun setUserData(userEntity: UserEntity)
 
     suspend fun authWithGoogle(token: String): Boolean

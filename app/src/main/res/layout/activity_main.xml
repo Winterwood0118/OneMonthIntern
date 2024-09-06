@@ -9,12 +9,24 @@
     tools:context=".presentation.main.MainActivity">
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnWithDrawl"
+        style="@style/CustomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원탈퇴"
+        app:layout_constraintBottom_toTopOf="@id/btnCheckData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignOut" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignOut"
         style="@style/CustomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그아웃"
         android:layout_marginBottom="30dp"
+        android:text="로그아웃"
         app:layout_constraintBottom_toTopOf="@+id/btnWithDrawl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -23,15 +35,16 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnWithDrawl"
+        android:id="@+id/btnCheckData"
         style="@style/CustomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원탈퇴"
+        android:text="정보확인"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignOut" />
+        app:layout_constraintTop_toBottomOf="@+id/btnWithDrawl"
+        app:layout_constraintVertical_chainStyle="packed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,18 +42,9 @@ class UserRepositoryImpl @Inject constructor(
         firebaseAuth.currentUser?.delete()?.await()
     }
 
-    override suspend fun getUserData(): UserEntity {
-        val userUid = getUserUid()
-        var userData: UserEntity? = null
-        Log.d("uid", userUid)
-        firestore.collection("userData").document(userUid).addSnapshotListener { snapshot, e ->
-            e?.let {
-                Log.e("Get User Data Error", e.toString(), e)
-                return@addSnapshotListener
-            }
-            userData = snapshot?.toObject<UserResponse>()?.toEntity()
-                ?: throw Exception("Get User Data Error")
-        }
+    override suspend fun getUserData(userUid: String): UserEntity {
+        val snapshot = firestore.collection("userData").document(userUid).get().await()
+        val userData = snapshot?.toObject<UserResponse>()?.toEntity()
         return userData ?: throw Exception("Get User Data Error")
     }
 
