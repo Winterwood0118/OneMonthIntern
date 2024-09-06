@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kr.nbc.onemonthintern.R
 import kr.nbc.onemonthintern.databinding.ActivityLogInSelectBinding
@@ -29,12 +30,9 @@ class LogInSelectActivity : AppCompatActivity() {
     private val googleSignInLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            Log.d("LOGIN--", task.toString())
             try {
                 val account = task.getResult(ApiException::class.java)!!
-                lifecycleScope.launch {
-                    viewModel.googleLogIn(token = account.idToken!!)
-                }
+                firebaseAuthWithGoogleToken(account.idToken!!)
             } catch (e: ApiException) {
                 makeShortToast("구글 로그인 실패")
             }
@@ -58,9 +56,7 @@ class LogInSelectActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.btnEmailLogIn.setOnDebounceClickListener {
-            val intent = Intent(this, OnBoardingActivity::class.java)
-            startActivity(intent)
-            finish()
+            launchOnBoardingActivity()
         }
 
         binding.ivGoogleLogIn.setOnDebounceClickListener {
@@ -69,10 +65,12 @@ class LogInSelectActivity : AppCompatActivity() {
     }
 
     private fun observeLogInComplete() {
-        viewModel.isGoogleLogInSuccess.observe(this) { result ->
-            if (result) {
-                makeShortToast("구글 로그인에 성공했습니다.")
-                launchMainActivity()
+        lifecycleScope.launch {
+            viewModel.isGoogleLogInSuccess.collectLatest { result ->
+                if (result) {
+                    makeShortToast("구글 로그인에 성공했습니다.")
+                    launchMainActivity()
+                }
             }
         }
     }
@@ -81,6 +79,11 @@ class LogInSelectActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun launchOnBoardingActivity() {
+        val intent = Intent(this, OnBoardingActivity::class.java)
+        startActivity(intent)
     }
 
     private fun initGoogleAuth() {
@@ -96,6 +99,12 @@ class LogInSelectActivity : AppCompatActivity() {
     private fun googleLogIn() {
         val googleIntent = googleSignInClient.signInIntent
         googleSignInLauncher.launch(googleIntent)
+    }
+
+    private fun firebaseAuthWithGoogleToken(token: String) {
+        lifecycleScope.launch {
+            viewModel.googleLogIn(token)
+        }
     }
 
 }

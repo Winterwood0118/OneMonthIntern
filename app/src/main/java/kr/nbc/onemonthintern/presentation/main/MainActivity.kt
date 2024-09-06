@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     is UiState.Success -> {
-                        //nothing to do
+                        mainViewModel.getUserData()
                     }
                 }
             }
