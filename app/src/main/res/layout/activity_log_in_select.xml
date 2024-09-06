@@ -18,6 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="가입되지 않은 이메일은 회원가입절차로 넘어갑니다"
+        android:textColor="@color/hint_grey"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEmailLogIn" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnEmailLogIn"
