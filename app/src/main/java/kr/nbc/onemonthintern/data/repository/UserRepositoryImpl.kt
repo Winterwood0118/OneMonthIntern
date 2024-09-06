@@ -79,7 +79,7 @@ class UserRepositoryImpl @Inject constructor(
                 logInResult = false
             }
         }.await()
-        if (checkFirstLogIn() && logInResult){
+        if (checkFirstLogIn() && logInResult) {
             val email = firebaseAuth.currentUser?.email ?: ""
             val name = firebaseAuth.currentUser?.displayName ?: ""
             val phoneNumber = firebaseAuth.currentUser?.phoneNumber ?: ""

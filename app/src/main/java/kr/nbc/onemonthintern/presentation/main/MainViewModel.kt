@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _currentUserUid.emit(UiState.Success(userRepository.getUserUid()))
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 _currentUserUid.emit(UiState.Error(e.toString()))
             }
         }

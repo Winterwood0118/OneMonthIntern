@@ -19,7 +19,7 @@ class OnBoardingSharedViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _isDuplicate = MutableStateFlow<UiState<Boolean>>(UiState.Loading)
-    val isDuplicated:StateFlow<UiState<Boolean>> get() = _isDuplicate
+    val isDuplicated: StateFlow<UiState<Boolean>> get() = _isDuplicate
 
     private var _logInState = MutableStateFlow<UiState<Boolean>>(UiState.Loading)
     val logInState: StateFlow<UiState<Boolean>> get() = _logInState
@@ -48,49 +48,49 @@ class OnBoardingSharedViewModel @Inject constructor(
         }
     }
 
-    suspend fun signIn(){
+    suspend fun signIn() {
         _logInState.emit(UiState.Loading)
         try {
             userRepository.signIn(emailInput, passwordInput)
             _logInState.emit(UiState.Success(true))
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("Unknown Error", e.toString(), e)
             _logInState.emit(UiState.Error(e.toString()))
         }
     }
 
-    fun inputEmail(email: String){
+    fun inputEmail(email: String) {
         Log.d("input", email)
         _emailInput = email
     }
 
-    fun inputPassword(password: String){
+    fun inputPassword(password: String) {
         Log.d("input", password)
         _passwordInput = password
     }
 
-    fun inputName(name: String){
+    fun inputName(name: String) {
         Log.d("input", name)
         _nameInput = name
     }
 
-    fun inputPhoneNumber(phoneNumber: String){
+    fun inputPhoneNumber(phoneNumber: String) {
         Log.d("input", phoneNumber)
         _phoneNumberInput = phoneNumber
     }
 
-    fun checkDuplicate(){
+    fun checkDuplicate() {
         viewModelScope.launch {
             try {
                 _isDuplicate.emit(UiState.Success(userRepository.isDuplicateEmail(emailInput)))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("Unknown Error", e.toString(), e)
                 _isDuplicate.emit(UiState.Error(e.toString()))
             }
         }
     }
 
-    fun resetDuplicateCheck(){
+    fun resetDuplicateCheck() {
         viewModelScope.launch {
             _isDuplicate.emit(UiState.Loading)
         }

@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import kr.nbc.onemonthintern.R
 import kr.nbc.onemonthintern.databinding.ActivityMainBinding
 import kr.nbc.onemonthintern.presentation.onboarding.LogInSelectActivity
-import kr.nbc.onemonthintern.presentation.onboarding.OnBoardingActivity
 import kr.nbc.onemonthintern.presentation.util.UiState
 import kr.nbc.onemonthintern.presentation.util.makeShortToast
 import kr.nbc.onemonthintern.presentation.util.setOnDebounceClickListener

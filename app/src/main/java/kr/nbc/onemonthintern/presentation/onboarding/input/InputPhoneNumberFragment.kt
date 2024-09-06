@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kr.nbc.onemonthintern.databinding.FragmentInputPhoneNumberBinding
 import kr.nbc.onemonthintern.presentation.onboarding.OnBoardingSharedViewModel
-import kr.nbc.onemonthintern.presentation.util.checkPasswordRegex
 import kr.nbc.onemonthintern.presentation.util.checkPhoneNumberRegex
 import kr.nbc.onemonthintern.presentation.util.makeShortToast
 
@@ -19,20 +18,12 @@ class InputPhoneNumberFragment : Fragment(), CheckRegexFragment {
     private val binding get() = _binding!!
     private val sharedViewModel: OnBoardingSharedViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInputPhoneNumberBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {

@@ -51,6 +51,7 @@ class OnBoardingActivity : AppCompatActivity() {
                             makeShortToast("로그인에 성공했습니다.")
                             launchMainActivity()
                         }
+
                         is UiState.Error -> makeShortToast(it.message)
                         is UiState.Loading -> {
                             // nothing to do

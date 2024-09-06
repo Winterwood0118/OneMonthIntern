@@ -1,7 +1,5 @@
 package kr.nbc.onemonthintern.presentation.onboarding
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +18,5 @@ class LogInSelectViewModel @Inject constructor(
     suspend fun googleLogIn(token: String) {
         _isGoogleLogInSuccess.emit(userRepository.authWithGoogle(token))
     }
-
-/*    fun setIsGoogleLogInSuccess(boolean: Boolean) {
-        _isGoogleLogInSuccess.value = boolean
-    }*/
 
 }
