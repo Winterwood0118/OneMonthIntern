@@ -15,9 +15,15 @@
     1. 회원가입/로그인 페이지 완성후 완벽한지 테스트하기
         - 다양한 상황에서 테스트해보기
       
-## 기술
-
-
+## 기술 스택
+|종류|상세|
+|---|---|
+|아키텍쳐|Clean Architecture|
+|디자인패턴|MVVM, Repository, DI(Dagger Hilt)|
+|비동기처리|Coroutine, Flow|
+|DB|Firebase FireStore|
+|인증시스템|Firebase Authentication|
+|UI|Material3, Viewpager2, Fragment|
 
 ## 화면
 실행 시
