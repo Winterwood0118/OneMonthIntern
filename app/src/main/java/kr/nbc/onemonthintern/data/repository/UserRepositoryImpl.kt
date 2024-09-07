@@ -2,6 +2,7 @@ package kr.nbc.onemonthintern.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
@@ -70,18 +71,20 @@ class UserRepositoryImpl @Inject constructor(
                 logInResult = false
             }
         }.await()
-        if (checkFirstLogIn() && logInResult) {
-            val email = firebaseAuth.currentUser?.email ?: ""
-            val name = firebaseAuth.currentUser?.displayName ?: ""
-            val phoneNumber = firebaseAuth.currentUser?.phoneNumber ?: ""
+        val currentUser = firebaseAuth.currentUser
+
+        if (checkFirstLogIn(currentUser) && logInResult) {
+            val email = currentUser?.email ?: ""
+            val name = currentUser?.displayName ?: ""
+            val phoneNumber = currentUser?.phoneNumber ?: ""
             val userEntity = UserEntity(email, name, phoneNumber)
             setUserData(userEntity)
         }
         return logInResult
     }
 
-    private suspend fun checkFirstLogIn(): Boolean {
-        val userUid = firebaseAuth.currentUser?.uid
+    private suspend fun checkFirstLogIn(currentUser: FirebaseUser?): Boolean {
+        val userUid = currentUser?.uid
         userUid?.let {
             val snapshot = firestore.collection("userData").document(userUid).get().await()
             return snapshot.data?.isEmpty() ?: true
