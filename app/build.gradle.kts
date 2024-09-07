@@ -57,9 +57,6 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
-    //coil
-    implementation(libs.coil)
-
     //firebase
     implementation(platform(libs.firebase.bom))
     implementation("com.google.firebase:firebase-auth-ktx")

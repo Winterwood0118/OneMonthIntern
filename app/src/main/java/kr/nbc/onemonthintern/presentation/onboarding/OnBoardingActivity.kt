@@ -52,7 +52,7 @@ class OnBoardingActivity : AppCompatActivity() {
                             launchMainActivity()
                         }
 
-                        is UiState.Error -> makeShortToast(it.message)
+                        is UiState.Error -> makeShortToast("로그인에 실패했습니다.\n아이디와 비밀번호를 확인해주세요")
                         is UiState.Loading -> {
                             // nothing to do
                         }
@@ -61,14 +61,12 @@ class OnBoardingActivity : AppCompatActivity() {
             }
         }
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                sharedViewModel.signUpState.collectLatest {
-                    when (it) {
-                        is UiState.Success -> sharedViewModel.signIn()
-                        is UiState.Error -> makeShortToast(it.message)
-                        is UiState.Loading -> {
-                            // nothing to do
-                        }
+            sharedViewModel.signUpState.collectLatest {
+                when (it) {
+                    is UiState.Success -> sharedViewModel.signIn()
+                    is UiState.Error -> makeShortToast(it.message)
+                    is UiState.Loading -> {
+                        // nothing to do
                     }
                 }
             }
